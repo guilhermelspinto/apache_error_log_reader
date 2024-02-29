@@ -1,33 +1,56 @@
-O "Apache Error Log Reader" é um pequeno sistema Python projetado para ajudar os usuários a analisar e entender os logs de erro do servidor Apache. Este sistema é útil para administradores de sistemas, desenvolvedores web e qualquer pessoa que precise monitorar e diagnosticar problemas em um servidor web Apache.
+# Apache Error Log Reader
 
-Recursos Principais:
-Leitura de Logs de Erro do Apache:
+The Apache Error Log Reader is a Python tool that allows users to analyze Apache server error logs, identifying and tallying different types of recorded errors.
 
-O sistema permite que os usuários forneçam o caminho para o arquivo de log de erro do Apache como um argumento de linha de comando.
-Ele lê o arquivo de log e extrai os erros registrados, identificando tanto os erros do tipo "PHP Warning" quanto os "PHP Fatal error".
-Agrupamento e Contagem de Erros:
+## Features
 
-O sistema agrupa os erros semelhantes, ignorando as partes específicas do registro de data/hora, para garantir que erros semelhantes sejam contabilizados juntos.
-Ele conta o número de ocorrências de cada erro e exibe as contagens correspondentes.
-Opção para Especificar Número de Linhas:
+- **Error Log Reading**: Analyzes Apache server error log files to identify "PHP Warning" and "PHP Fatal error" errors.
+- **Error Grouping and Counting**: Groups similar errors and counts how many times each error occurred.
+- **Export to CSV**: Optionally, results can be exported to a CSV file for additional analysis.
 
-Os usuários têm a opção de especificar o número de linhas a serem lidas do arquivo de log. Isso é útil para limitar a quantidade de dados processados, especialmente em arquivos de log extensos.
-Como Usar:
-Clone o Repositório:
+## How to Use
 
-Os usuários podem clonar o repositório do "Apache Error Log Reader" do GitHub para obter o código-fonte.
-Execute o Script:
+### Prerequisites
 
-Os usuários podem executar o script Python fornecendo o caminho para o arquivo de log de erro do Apache como um argumento de linha de comando.
-Eles também têm a opção de especificar o número de linhas a serem processadas.
-Interpretação dos Resultados:
+- Python 3 installed on the system.
 
-O sistema exibirá os erros agrupados e suas contagens correspondentes, permitindo que os usuários identifiquem facilmente os problemas mais frequentes no servidor Apache.
-Contribuições e Feedback:
-O "Apache Error Log Reader" é um projeto de código aberto e recebe contribuições da comunidade. Os usuários são incentivados a reportar problemas, sugerir melhorias e enviar solicitações de pull através do GitHub.
+### Installation
 
-Espera-se que este sistema seja uma ferramenta útil para administradores de sistemas e desenvolvedores web que desejam monitorar e solucionar problemas nos servidores Apache.
+1. Clone the repository to your local system:
 
+    ```bash
+    git clone https://github.com/guilhermelspinto/apache-error-log-reader.git
+    ```
 
+2. Navigate to the project directory:
 
+    ```bash
+    cd apache-error-log-reader
+    ```
+
+### Usage
+
+Run the `elreader.py` script passing the path to the Apache error log file as the first argument:
+
+```bash
+python3 elreader.py /path/to/error_log
+```
+
+Optionally, you can specify the number of lines to be read from the file and the output CSV file name:
+
+```bash
+python3 elreader.py /path/to/error_log 100 output.csv
+```
+
+### Results
+
+The results will be displayed in the terminal, showing the grouped errors and their corresponding counts. If an output CSV file name is specified, the results will also be exported to that file.
+
+## Contribution
+
+Contributions are welcome!
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
