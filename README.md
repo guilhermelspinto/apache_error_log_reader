@@ -31,10 +31,10 @@ The Error Log Reader is a Python script designed to read and analyze Apache serv
 
 ### Usage
 
-Run the script `error_log_reader.py` with the required arguments:
+Run the script `elreader.py` with the required arguments:
 
 ```bash
-python3 error_log_reader.py -f /path/to/error_log
+python3 elreader.py -f /path/to/error_log
 ```
 
 Optional arguments:
@@ -44,7 +44,7 @@ Optional arguments:
 Example with optional arguments:
 
 ```bash
-python3 error_log_reader.py -f /path/to/error_log -l 100 -e exported_errors
+python3 elreader.py -f /path/to/error_log -l 100 -e exported_errors
 ```
 
 This command will read the last 100 lines from the error log file and export the errors to a CSV file named `exported_errors.csv`.
