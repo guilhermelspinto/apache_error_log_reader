@@ -51,7 +51,7 @@ This command will read the last 100 lines from the error log file and export the
 
 ## Contribution
 
-Contributions are welcome! Feel free to report issues, submit pull requests, or suggest new features.
+Contributions are welcome!
 
 ## License
 
