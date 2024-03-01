@@ -1,60 +1,56 @@
 import sys
 import re
 import csv
+import argparse
 
-if len(sys.argv) < 2:
-    print("How to use: python3 elreader.py /path/to/error_log [number_of_lines] [output_csv_file]")
-    sys.exit(1)
+def parse_args():
+    parser = argparse.ArgumentParser(description="Error log reader")
+    parser.add_argument("-f", "--file", required=True, help="Path to error log file")
+    parser.add_argument("-l", "--limit", type=int, default=None, help="Limit the number of lines to read")
+    parser.add_argument("-e", "--export", metavar="FILENAME_EXPORTED", help="Export errors to a CSV file with the specified name")
+    return parser.parse_args()
 
-file_path = sys.argv[1]
+def main():
+    args = parse_args()
 
-# numero de linhas
-num_lines = None
-if len(sys.argv) >= 3:
-    try:
-        num_lines = int(sys.argv[2])
-    except ValueError:
-        print("Invalid number of lines. Using default value (reading entire file).")
+    file_path = args.file
+    num_lines = args.limit
+    export_csv_file = args.export
 
-# nome do arquivo csv, vai ser exportado se tiver esse parametro
-output_csv_file = None
-if len(sys.argv) >= 4:
-    output_csv_file = sys.argv[3] + ".csv"
+    error_counts = {}
 
-error_counts = {}
+    with open(file_path, 'r') as f:
+        if num_lines is None:
+            lines = f.readlines()
+        else:
+            lines = f.readlines()[-num_lines:]
 
-with open(file_path, 'r') as f:
+        for line in lines:
+            match = re.search(r'PHP (Warning|Fatal error): (.+)', line)
+            if match:
+                error_type = match.group(1)
+                error_message = match.group(2).strip()
 
-    if num_lines is None:
-        lines = f.readlines()
-    else:
-        lines = f.readlines()[-num_lines:]
-    for line in lines:
+                error = f"PHP {error_type}: {error_message}"
 
-        match = re.search(r'PHP (Warning|Fatal error): (.+)', line)
-        if match:
-            error_type = match.group(1)
-            error_message = match.group(2).strip()
+                if error in error_counts:
+                    error_counts[error] += 1
+                else:
+                    error_counts[error] = 1
 
-            error = f"PHP {error_type}: {error_message}"
+    for error, count in error_counts.items():
+        print("-----------------------------------------------------------")
+        print(f"Error: {error} - Count: {count}")
 
-            if error in error_counts:
-                error_counts[error] += 1
-            else:
-                error_counts[error] = 1
+    if export_csv_file:
+        output_csv_file = export_csv_file + ".csv"
+        with open(output_csv_file, 'w', newline='') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(['Error', 'Count'])
+            for error, count in error_counts.items():
+                writer.writerow([error, count])
 
+        print(f"Errors exported to {output_csv_file}")
 
-for error, count in error_counts.items():
-    print("-----------------------------------------------------------")
-    print(f"Error: {error} - Count: {count}")
-
-
-if output_csv_file:
-    with open(output_csv_file, 'w', newline='') as csv_file:
-        writer = csv.writer(csv_file)
-        writer.writerow(['Error', 'Count'])
-        for error, count in error_counts.items():
-            writer.writerow([error, count])
-
-    print(f"Errors exported to {output_csv_file}")
-
+if __name__ == "__main__":
+    main()

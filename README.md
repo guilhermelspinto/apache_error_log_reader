@@ -1,14 +1,15 @@
-# Apache Error Log Reader
+# Error Log Reader
 
-The Apache Error Log Reader is a Python tool that allows users to analyze Apache server error logs, identifying and tallying different types of recorded errors.
+The Error Log Reader is a Python script designed to read and analyze Apache server error logs, specifically identifying and tallying "PHP Warning" and "PHP Fatal error" occurrences.
 
 ## Features
 
-- **Error Log Reading**: Analyzes Apache server error log files to identify "PHP Warning" and "PHP Fatal error" errors.
-- **Error Grouping and Counting**: Groups similar errors and counts how many times each error occurred.
-- **Export to CSV**: Optionally, results can be exported to a CSV file for additional analysis.
+- **Argument Parsing**: Utilizes the `argparse` module to parse command-line arguments for flexible usage.
+- **Error Identification**: Parses the error log file to identify PHP warnings and fatal errors.
+- **Error Counting**: Groups similar errors and counts their occurrences.
+- **Export to CSV**: Optionally exports the error data to a CSV file for further analysis.
 
-## How to Use
+## Usage
 
 ### Prerequisites
 
@@ -19,38 +20,39 @@ The Apache Error Log Reader is a Python tool that allows users to analyze Apache
 1. Clone the repository to your local system:
 
     ```bash
-    git clone https://github.com/guilhermelspinto/apache-error-log-reader.git
+    git clone https://github.com/your-username/error-log-reader.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd apache-error-log-reader
+    cd error-log-reader
     ```
 
 ### Usage
 
-Run the `elreader.py` script passing the path to the Apache error log file as the first argument:
+Run the script `error_log_reader.py` with the required arguments:
 
 ```bash
-python3 elreader.py /path/to/error_log
+python3 error_log_reader.py -f /path/to/error_log
 ```
 
-Optionally, you can specify the number of lines to be read from the file and the output CSV file name:
+Optional arguments:
+- `-l, --limit`: Limit the number of lines to read from the error log file.
+- `-e, --export`: Export errors to a CSV file with the specified name.
+
+Example with optional arguments:
 
 ```bash
-python3 elreader.py /path/to/error_log 100 output.csv
+python3 error_log_reader.py -f /path/to/error_log -l 100 -e exported_errors
 ```
 
-### Results
-
-The results will be displayed in the terminal, showing the grouped errors and their corresponding counts. If an output CSV file name is specified, the results will also be exported to that file.
+This command will read the last 100 lines from the error log file and export the errors to a CSV file named `exported_errors.csv`.
 
 ## Contribution
 
-Contributions are welcome!
+Contributions are welcome! Feel free to report issues, submit pull requests, or suggest new features.
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
